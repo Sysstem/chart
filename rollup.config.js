@@ -1,33 +1,47 @@
-import svelte from 'rollup-plugin-svelte';
-import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
-import pkg from './package.json';
+import pkg from "./package.json";
 
+import commonjs from "rollup-plugin-commonjs";
+import babel from "rollup-plugin-babel";
+import postcss from "rollup-plugin-postcss";
+import scss from "rollup-plugin-scss";
+import bundleSize from "rollup-plugin-bundle-size";
+import { terser } from "rollup-plugin-terser";
 
-const name = pkg.name
-  // .replace(/^(@\S+\/)?(svelte-)?(\S+)/, '$3')
-  .replace(/^\w/, m => m.toUpperCase())
-  .replace(/-\w/g, m => m[1].toUpperCase()); // > SvelteFrappeCharts
-
-
-export default {
-  input: 'src/index.js',
-  output: [
-    {
-      file: pkg.module,
-      'format': 'es'
+export default [
+  // browser-friendly UMD build
+  {
+    input: "src/js/index.js",
+    output: {
+      sourcemap: true,
+      name: "frappe",
+      file: pkg.browser,
+      format: "umd",
     },
-    {
-      file: pkg.main,
-      'format': 'umd',
-      name
-    }
-  ],
-  plugins: [
-    svelte(),
-    resolve({
-      dedupe: ['svelte']
-    }),
-    commonjs()
-  ]
-};
+    plugins: [
+      commonjs(),
+      babel({
+        exclude: ["node_modules/**"],
+      }),
+      terser(),
+      scss({ output: "dist/frappe-charts.min.css" }),
+      bundleSize(),
+    ],
+  },
+
+  // CommonJS (for Node) and ES module (for bundlers) build.
+  {
+    input: "src/js/chart.js",
+    output: [
+      { file: pkg.common, format: "cjs", sourcemap: true },
+      { file: pkg.module, format: "es", sourcemap: true },
+    ],
+    plugins: [
+      babel({
+        exclude: ["node_modules/**"],
+      }),
+      terser(),
+      postcss(),
+      bundleSize(),
+    ],
+  },
+];

@@ -1,216 +1,122 @@
-<div align="center" margin="0 auto 20px">
-  <h1>svelte-frappe-charts</h1>
-  <p style="font-style: italic;">📈 Svelte bindings for <a href="https://frappe.io/charts">frappe-charts.</a></p>
-  <div>
-    <a href='https://github.com/himynameisdave/svelte-frappe-charts/actions?query=workflow%3Atest+branch%3Amain'>
-      <img src="https://github.com/himynameisdave/svelte-frappe-charts/workflows/test/badge.svg" alt="GitHub Actions - Test Workflow Badge" />
+<div align="center">
+    <img src="https://github.com/frappe/design/blob/master/logos/logo-2019/frappe-charts-logo.png" height="128">
+    <a href="https://frappe.github.io/charts">
+        <h2>Frappe Charts</h2>
     </a>
-    <a href='https://github.com/himynameisdave/svelte-frappe-charts/actions?query=workflow%3Aoutdated+branch%3Amain'>
-      <img src="https://github.com/himynameisdave/svelte-frappe-charts/workflows/outdated/badge.svg" alt="GitHub Actions - Test Workflow Badge" />
-    </a>
-    <a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fhimynameisdave%2Fsvelte-frappe-charts?ref=badge_shield" alt="FOSSA Status">
-      <img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fhimynameisdave%2Fsvelte-frappe-charts.svg?type=shield"/>
-    </a>
-    <a href="https://www.npmjs.com/package/svelte-frappe-charts">
-        <img src="https://img.shields.io/npm/dm/svelte-frappe-charts.svg" alt="Downloads">
-    </a>
-    <a title="MadeWithSvelte.com Shield" href="https://madewithsvelte.com/p/svelte-frappe-charts/shield-link">
-      <img src="https://madewithsvelte.com/storage/repo-shields/2274-shield.svg" />
-    </a>
-  </div>
+    <p align="center">
+        <p>GitHub-inspired modern, intuitive and responsive charts with zero dependencies</p>
+        <a href="https://frappe.io/charts">
+            <b>Explore Demos » </b>
+        </a>
+        <a href="https://codesandbox.io/s/frappe-charts-demo-viqud">
+            <b> Edit at CodeSandbox »</b>
+        </a>
+        <a href="https://frappe.io/charts/docs">
+            <b>Documentation » </b>
+        </a>
+    </p>
 </div>
 
----
+<p align="center">
+    <a href="https://bundlephobia.com/result?p=frappe-charts">
+        <img src="https://img.shields.io/bundlephobia/minzip/frappe-charts">
+    </a>
+</p>
 
+<p align="center">
+    <a href="https://frappe.github.io/charts">
+        <img src=".github/example.gif">
+    </a>
+</p>
 
-Makes it easy to use [frappe-charts](https://frappe.io/charts) in your [Svelte](https://svelte.dev/) project.
+### Contents
+* [Installation](#installation)
+* [Usage](#usage)
+* [Contribute](https://frappe.io/charts/docs/contributing)
+* [License](#license)
 
-### Installation
+#### Installation
 
-```
-yarn add svelte svelte-frappe-charts
+##### Via NPM
+Install via [`npm`](https://www.npmjs.com/get-npm):
 
-npm i -S svelte svelte-frappe-charts
-```
-
-> **Note**: Assumes you are using `>= svelte@3.0.0`.
-
-### Usage
-
-Use the chart in your Svelte project with ease:
-
-```svelte
-<script>
-  import Chart from 'svelte-frappe-charts';
-
-  let data = {
-    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-    datasets: [
-      {
-        values: [10, 12, 3, 9, 8, 15, 9]
-      }
-    ]
-  };
-</script>
-
-<Chart data={data} type="line" />
+```sh
+$ npm install frappe-charts
 ```
 
-The component API directly matches the [the configuration of `frappe-charts`](https://frappe.io/charts/docs/reference/configuration).
-
-### Updating data
-
-There are two ways to update data in a chart: either in adding and removing individual points, or updating the existing data with an entirely new set of data points.
-
-#### Updating individual data points
-
-##### addDataPoint
-
-Add a data point to the chart, increasing the length of the dataset.
-
-```svelte
-<script>
-  import Chart from 'svelte-frappe-charts';
-
-  let data = {
-    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-    datasets: [
-      {
-        values: [10, 12, 3, 9, 8, 15, 9]
-      }
-    ]
-  };
-
-  let chartRef;
-
-  function addDataPoint() {
-    chartRef.addDataPoint('Wed', [30], 1);
-  }
-</script>
-
-<Chart data={data} type="line" bind:this={chartRef} />
-
-<button on:click={addDataPoint}>Add data point</button>
+and include in your project:
+```js
+import { Chart } from "frappe-charts"
 ```
 
-[More info on `addDataPoint`](https://frappe.io/charts/docs/reference/api#adddatapoint).
-
-##### removeDataPoint
-
-Remove a data point from the chart, reducing the length of the dataset.
-
-```svelte
-<script>
-  import Chart from 'svelte-frappe-charts';
-
-  let data = {
-    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-    datasets: [
-      {
-        values: [10, 12, 3, 9, 8, 15, 9]
-      }
-    ]
-  };
-
-  let chartRef;
-
-  function removeDataPoint() {
-    chartRef.removeDataPoint(3); // Index of the item to remove
-  }
-</script>
-
-<Chart data={data} type="line" bind:this={chartRef} />
-
-<button on:click={removeDataPoint}>Remove data point</button>
+Or include following for es-modules(eg:vuejs):
+```js
+import { Chart } from 'frappe-charts/dist/frappe-charts.esm.js'
+// import css
+import 'frappe-charts/dist/frappe-charts.min.css'
 ```
 
-[More info on `removeDataPoint`](https://frappe.io/charts/docs/reference/api#removedatapoint).
+##### or include within your HTML
 
-#### Updating full data
-
-Update the entire data, including annotations, by passing the entire new data object to update.
-
-```svelte
-<script>
-  import Chart from 'svelte-frappe-charts';
-
-  let data = {
-    labels: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-    datasets: [
-      {
-        values: [10, 12, 3, 9, 8, 15, 9]
-      }
-    ]
-  };
-
-  let chartRef;
-
-  function updateData() {
-    data = {
-      labels: ['Friday', 'Saturday', 'Sunday'],
-      datasets: [
-        {
-          values: [300, 380, 275]
-        }
-      ]
-    };
-  }
-</script>
-
-<Chart data={data} type="line" bind:this={chartRef} />
-
-<button on:click={updateData}>Update Chart</button>
+```html
+<script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.6.1/dist/frappe-charts.min.umd.js"></script>
+<!-- or -->
+<script src="https://unpkg.com/frappe-charts@1.6.1/dist/frappe-charts.min.umd.js"></script>
 ```
 
-### Chart navigation
-
-[Chart navigation](https://frappe.io/charts/docs/update_state/navigation) can be used when the `isNavigable` prop is set on the `Chart` component.
-Once it is set, the `data-select` event is propagated and can be handled in Svelte's standard ways (see the Events section of the tutorial and examples, and [the API docs](https://svelte.dev/docs#on_component_event)).
-
-```svelte
-<script>
-  import Chart from "svelte-frappe-charts";
-
-  let data = {
-    labels: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon" ],
-    datasets: [
-      { values: [ 300, 250, 720, 560, 370, 610, 690, 410, 370, 480, 620, 260, 170, 510, 630, 710 ] },
+#### Usage
+```js
+const data = {
+    labels: ["12am-3am", "3am-6pm", "6am-9am", "9am-12am",
+        "12pm-3pm", "3pm-6pm", "6pm-9pm", "9am-12am"
     ],
-  };
+    datasets: [
+        {
+            name: "Some Data", chartType: "bar",
+            values: [25, 40, 30, 35, 8, 52, 17, -4]
+        },
+        {
+            name: "Another Set", chartType: "line",
+            values: [25, 50, -10, 15, 18, 32, 27, 14]
+        }
+    ]
+}
 
-  const onDataSelect = (event) => {
-    console.log("Data select event fired!", event);
-    selected = event;
-  };
-  let selected;
-</script>
-
-<h1>Svelte Frappe charts navigation demo</h1>
-<Chart {data} on:data-select={onDataSelect} isNavigable type="bar" />
+const chart = new frappe.Chart("#chart", {  // or a DOM element,
+                                            // new Chart() in case of ES6 module with above usage
+    title: "My Awesome Chart",
+    data: data,
+    type: 'axis-mixed', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
+    height: 250,
+    colors: ['#7cd6fd', '#743ee2']
+})
 ```
 
-### Exporting charts
-
-You can easily export a chart ([see Exporting](https://frappe.io/charts/docs/exporting/images)) as an SVG by storing a reference to the `<Chart />` component, and then calling `exportChart` on it:
-
-```svelte
-<script>
-  // ...
-
-  let chartRef;
-  const onExport = () => chartRef.exportChart();
-</script>
-
-<Chart data={data} type="line" bind:this={chartRef} />
-<button on:click={onExport}>
-  Export
-</button>
+Or for es-modules (replace `new frappe.Chart()` with `new Chart()`):
+```diff
+- const chart = new frappe.Chart("#chart", {
++ const chart = new Chart("#chart", {  // or a DOM element,
+                                    // new Chart() in case of ES6 module with above usage
+    title: "My Awesome Chart",
+    data: data,
+    type: 'axis-mixed', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
+    height: 250,
+    colors: ['#7cd6fd', '#743ee2']
+})
 ```
 
-### Contributing
 
-[Issues](https://github.com/himynameisdave/svelte-frappe-charts/issues/new) and pull requests are greatly welcome!
+If you want to contribute:
 
----
+1. Clone this repo.
+2. `cd` into project directory
+3. `npm install`
+4. `npm i npm-run-all -D` (*optional --> might be required for some developers*)
+5. `npm run dev`
 
-_✌️Created by [Dave](http://himynameisdave.com). Licenced under MIT._
+#### License
+This repository has been released under the [MIT License](LICENSE)
+
+------------------
+Project maintained by [Frappe](https://frappe.io).
+Used in [ERPNext](https://erpnext.com). Read the [blog post](https://medium.com/@pratu16x7/so-we-decided-to-create-our-own-charts-a95cb5032c97).
