@@ -742,6 +742,7 @@ export function datasetBar(
 			y: 0,
 			dy: (FONT_SIZE / 2) * -1 + "px",
 			"font-size": FONT_SIZE + "px",
+			fill: "#ACBBCD",
 			"text-anchor": "middle",
 			innerHTML: label,
 		});
@@ -780,6 +781,7 @@ export function datasetDot(x, y, radius, color, label = "", index = 0) {
 			y: 0,
 			dy: (FONT_SIZE / 2) * -1 - radius + "px",
 			"font-size": FONT_SIZE + "px",
+			fill: "#ACBBCD",
 			"text-anchor": "middle",
 			innerHTML: label,
 		});
